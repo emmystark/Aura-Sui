@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #09090F; color: white; font-family: 'DM Sans', sans-serif; }
+
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes glowPulse {
+  0%,100% { filter: drop-shadow(0 0 6px rgba(124,92,252,0.5)); }
+  50% { filter: drop-shadow(0 0 20px rgba(124,92,252,1)) drop-shadow(0 0 40px rgba(124,92,252,0.4)); }
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideRight { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes progressBar { from { width: 0%; } to { width: var(--target-width); } }
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes dot { 0%,20% { content: '.'; } 40% { content: '..'; } 60%,100% { content: '...'; } }
+
+.card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; }
+.card:hover { border-color: rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); }
+.transition-card { transition: all 0.2s ease; }
+
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: #22C55E; animation: glowPulse 2s ease-in-out infinite; }
+
+.fade-in { animation: fadeIn 0.4s ease-out both; }
+.slide-right { animation: slideRight 0.3s ease-out both; }
+
+.aura-ring-sm {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
