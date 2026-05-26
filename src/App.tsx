@@ -1,4 +1,8 @@
 import { useState, useEffect } from 'react'
+import AgentExecutionView from './components/AgentExecutionView'
+import MemoryUpdatedView from './components/MemoryUpdatedView'
+import SettingsView from './components/Settingsview'
+import ActivityView from './components/Activityview'
 
 // ─── Shared Components ───────────────────────────────────────────────────────
 
@@ -661,10 +665,10 @@ export default function App() {
 
   const views: Record<string, JSX.Element> = {
     overview: <OverviewView />,
-    state: <PlaceholderView title="State Management" />,
-    access: <PlaceholderView title="Access Control" />,
-    activity: <PlaceholderView title="Activity Log" />,
-    settings: <PlaceholderView title="Settings" />,
+    state: <AgentExecutionView />,   // was PlaceholderView "State Management"
+    access: <MemoryUpdatedView />,
+    activity: <ActivityView />,
+    settings: <SettingsView />,
   }
 
   return (
