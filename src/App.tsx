@@ -615,17 +615,17 @@ const LoginView = ({ onLogin }: { onLogin: () => void }) => {
 
 // ─── Placeholder views for other nav ─────────────────────────────────────────
 
-const PlaceholderView = ({ title }: { title: string }) => (
-  <div className="flex-1 flex flex-col">
-    <div className="px-8 pt-7 pb-5 border-b border-white/[0.06]">
-      <h1 className="text-2xl font-semibold">{title}</h1>
-      <p className="text-white/35 text-sm mt-0.5">Coming soon in the full implementation.</p>
-    </div>
-    <div className="flex-1 flex items-center justify-center opacity-20">
-      <AuraRingLarge size={100} />
-    </div>
-  </div>
-)
+// const PlaceholderView = ({ title }: { title: string }) => (
+//   <div className="flex-1 flex flex-col">
+//     <div className="px-8 pt-7 pb-5 border-b border-white/[0.06]">
+//       <h1 className="text-2xl font-semibold">{title}</h1>
+//       <p className="text-white/35 text-sm mt-0.5">Coming soon in the full implementation.</p>
+//     </div>
+//     <div className="flex-1 flex items-center justify-center opacity-20">
+//       <AuraRingLarge size={100} />
+//     </div>
+//   </div>
+// )
 
 // ─── Root App ─────────────────────────────────────────────────────────────────
 

@@ -110,7 +110,7 @@ const DetailPanel = ({
   type: EventType
   onClose: () => void
 }) => {
-  const { color } = iconMap[type]
+  const {  } = iconMap[type]
   const statusColor = detail.status === 'Success' ? '#22C55E' : detail.status === 'Failed' ? '#EF4444' : '#F59E0B'
 
   return (
@@ -304,7 +304,6 @@ const DetailRow = ({
 const FilterSelect = ({
   icon,
   value,
-  options,
 }: {
   icon?: JSX.Element
   value: string
