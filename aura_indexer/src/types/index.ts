@@ -135,6 +135,26 @@ export interface DeepBookUserData {
 }
 
 // ---------------------------------------------------------------------------
+// Wallet Context Types
+// ---------------------------------------------------------------------------
+
+/** Contextual data about the user's overall wallet */
+export interface WalletContext {
+  /** The SuiNS domain name owned by this address (if any) */
+  suiNsName: string | null;
+
+  /** Timestamp of the oldest transaction we fetched (approximate account age) */
+  accountAgeMs: string | null;
+
+  /** Balances of all coins owned by the user */
+  balances: Array<{
+    coinType: string;
+    totalBalance: string;
+    coinObjectCount: number;
+  }>;
+}
+
+// ---------------------------------------------------------------------------
 // Aggregated User Profile (Raw)
 // ---------------------------------------------------------------------------
 
@@ -145,6 +165,9 @@ export interface RawUserProfile {
 
   /** Timestamp when this profile was fetched */
   fetchedAt: string;
+
+  /** General wallet context (balances, age, identity) */
+  walletContext: WalletContext;
 
   /** Data from Cetus (swaps + LP positions) */
   cetus: CetusUserData;

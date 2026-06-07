@@ -11,7 +11,7 @@
  *   npx tsx src/index.ts <SUI_ADDRESS>
  */
 
-import { fetchUserTransactions } from './fetchers/scanner.js';
+import { fetchUserTransactions, fetchWalletContext } from './fetchers/scanner.js';
 import { fetchCetusData } from './fetchers/cetus.js';
 import { fetchScallopData } from './fetchers/scallop.js';
 import { fetchDeepBookData } from './fetchers/deepbook.js';
@@ -55,10 +55,14 @@ async function main(): Promise<void> {
   // DeepBook is synchronous (pure in-memory filtering)
   const deepbookData = fetchDeepBookData(userAddress, transactions);
 
+  // Fetch broader wallet context (Balances, SuiNS, Age)
+  const walletContext = await fetchWalletContext(userAddress, transactions);
+
   // Aggregate into a single profile
   const profile: RawUserProfile = {
     userAddress,
     fetchedAt: new Date().toISOString(),
+    walletContext,
     cetus: cetusData,
     scallop: scallopData,
     deepbook: deepbookData,
@@ -69,6 +73,8 @@ async function main(): Promise<void> {
   console.log('='.repeat(60));
   console.log('FETCH SUMMARY');
   console.log('='.repeat(60));
+  console.log(`SuiNS Identity:             ${profile.walletContext.suiNsName || 'None'}`);
+  console.log(`Tokens Held:                ${profile.walletContext.balances.length}`);
   console.log(`Total Transactions Scanned: ${transactions.length}`);
   console.log(`Cetus Swaps:                ${profile.cetus.swaps.length}`);
   console.log(`Cetus LP Positions:         ${profile.cetus.positions.length}`);

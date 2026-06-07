@@ -75,3 +75,42 @@ export async function fetchUserTransactions(userAddress: string, maxPages: numbe
   console.log(`[Scanner] Done. Fetched ${transactions.length} transactions across ${pagesScanned} page(s).`);
   return transactions;
 }
+
+/**
+ * Fetches broader contextual data about the user's wallet.
+ * Includes: Coin Balances, SuiNS Domain Name, and Approximate Account Age.
+ */
+export async function fetchWalletContext(userAddress: string, transactions: UserTransaction[]) {
+  console.log(`[Context] Fetching wallet context for ${userAddress}...`);
+
+  // 1. Fetch all coin balances
+  const balancesResponse = await suiClient.getAllBalances({ owner: userAddress });
+  const balances = balancesResponse.map((b) => ({
+    coinType: b.coinType,
+    totalBalance: b.totalBalance,
+    coinObjectCount: b.coinObjectCount,
+  }));
+
+  // 2. Resolve SuiNS Name
+  let suiNsName: string | null = null;
+  try {
+    const resolvedName = await suiClient.resolveNameServiceNames({ address: userAddress });
+    if (resolvedName && resolvedName.data && resolvedName.data.length > 0) {
+      suiNsName = resolvedName.data[0];
+    }
+  } catch (error) {
+    console.warn(`[Context] Failed to resolve SuiNS name: ${error}`);
+  }
+
+  // 3. Approximate Account Age (from the oldest transaction fetched)
+  // Note: transactions are ordered descending, so the last one is the oldest we fetched.
+  const accountAgeMs = transactions.length > 0 ? transactions[transactions.length - 1].timestampMs : null;
+
+  console.log(`[Context] Found ${balances.length} coin types. SuiNS: ${suiNsName || 'None'}`);
+
+  return {
+    suiNsName,
+    accountAgeMs,
+    balances,
+  };
+}
